@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using PerformanceEvaluationSystem.Models;
+
+<table class="table table-bordered dl-horizontal">
+    <tbody>
+        @{  PerformanceEvaluation ctx = new PerformanceEvaluation();
+            User user = (User)Session["CurrentUser"];
+            <tr>
+                <td rowspan="8" width="100" style="vertical-align:middle;"><img src="~/Content/images/a1.jpg" alt="Alternate Text" /></td>
+                <td>Adı Soyadı</td>
+                <td>@user.Name</td>
+            </tr>
+            <tr>
+                <td>Sicil Numarası:</td>
+                <td>@user.RegistryNumber</td>
+            </tr>
+            <tr>
+                <td>Telefon Numarası</td>
+                <td>@user.PhoneNumber</td>
+            </tr>
+            <tr>
+                <td>E-Mail</td>
+                <td>@user.Email</td>
+            </tr>
+            <tr>
+                <td>Şirket Adı</td>
+                <td>@user.CompanyName</td>
+            </tr>
+            @*<tr>
+                <td>Hedef Giriş Yöneticisi</td>
+                @if (user.User2 == null)
+                {
+                    <td>---------</td>
+                }
+                else
+                {
+                    <td>@user.User2.Name</td>
+                }
+            </tr>
+            <tr>
+                <td>1.Yönetici(Değerlendiren)</td>
+                @if (user.User2 == null)
+                {
+                    <td>---------</td>
+                }
+                else
+                {
+                    <td>@user.User2.Name</td>
+                }
+            </tr>
+            <tr>
+                <td>2.Yönetici(Onaylayan)</td>
+                @if (user.User3 == null)
+                {
+                    <td>---------</td>
+                }
+                else
+                {
+                    <td>@user.User3.Name</td>
+                }
+            </tr>*@
+        }
+        @*<tr>
+            <td rowspan="8" width="100" style="vertical-align:middle;"><img src="~/Content/images/a1.jpg" alt="Alternate Text" /></td>
+            <td>Adı Soyadı</td>
+            <td>Suat Sevsin</td>
+        </tr>
+        <tr>
+            <td>Sicil Numarası:</td>
+            <td>29408945023975</td>
+        </tr>
+        <tr>
+            <td>Telefon Numarası</td>
+            <td>05466352492</td>
+        </tr>
+        <tr>
+            <td>E-Mail</td>
+            <td>ssevsin@gmail.com</td>
+        </tr>
+        <tr>
+            <td>Şirket Adı</td>
+            <td>AbdüşSağır LTD. ŞTİ.</td>
+        </tr>
+        <tr>
+            <td>Hedef Giriş Yöneticisi</td>
+            <td>Cemal</td>
+        </tr>
+        <tr>
+            <td>1.Yönetici(Değerlendiren)</td>
+            <td>Murat</td>
+        </tr>
+        <tr>
+            <td>2.Yönetici(Onaylayan)</td>
+            <td>Hasan</td>
+        </tr>*@
+    </tbody>
+</table>

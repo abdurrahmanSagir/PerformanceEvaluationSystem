@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "FirstManagerEvaluation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using PerformanceEvaluationSystem.Models
+@model List<Target>
+<table class="table table-striped table-bordered dl-horizontal " id="myTable">
+    <thead>
+        <tr>
+            <th scope="col">Hedef ID'si</th>
+            <th scope="col">Hedef Tipi</th>
+            <th scope="col">Hedef Kategorisi</th>
+            <th scope="col">Hedef Açıklaması</th>
+            <th scope="col">Hedef Ağırlığı</th>
+            <th scope="col">Personel Puanı</th>
+            <th scope="col">Personel Açıklaması</th>
+            <th scope="col">Puanla</th>
+            <th scope="col">Açıklama Yaz</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (Target t in Model)
+            {
+                var i = ((User)Session["CurrentUser"]).ID;
+                <tr>
+                    <td>@t.ID</td>
+                    @foreach (TargetType tType in ViewBag.targetTypes)
+                    {
+                        if (tType.ID == t.TargetTypeID)
+                        {
+                            <td>@tType.TargetTypeName</td>
+                        }
+                    }
+                    @foreach (TargetCategory tCategory in ViewBag.targetCategories)
+                    {
+                        if (tCategory.ID == t.TargetCategoryID)
+                        {
+                            <td>@tCategory.TargetCategoryName</td>
+                        }
+                    }
+                    <td>@t.TargetDescription</td>
+                    <td>@t.TargetWeight</td>
+                    @foreach (EvaluationDetail evDet in ViewBag.personalEvaluationDetails)
+                    {
+                        if (evDet.TargetID == t.ID)
+                        {
+                            <td>@evDet.Mark</td>
+                            <td>@evDet.Description</td>
+                        }
+                    }
+                    
+                    <td><input type="number" class="form-control" name="mark" /></td>
+                    <td><input type="text" class="form-control" name="description" /></td>
+                </tr>
+            }
+        }
+    </tbody>
+
+
+</table>
+<button class="btn btn-primary" onclick="addFirstManagerEvaluation()">Değerlendir</button>
+<a href="~/Profile/Index" class="btn btn-danger">Iptal</a>
+<script>
+    function addFirstManagerEvaluation() {
+        var rows = document.getElementsByTagName('table')[0].rows;
+        var data = [];
+        for (var i = 1; i < rows.length; i++) {
+
+            var datum = {
+                evaluatedPersonalID:@Model[0].UserID,
+                //değiştirilecek int patlar *******************
+                targetID: parseInt(rows[i].cells[0].firstChild.textContent, 10),
+                mark: parseInt(rows[i].cells[7].firstChild.value),
+                description: rows[i].cells[8].firstChild.value
+
+            }
+            data.push(datum);
+            console.log(datum);
+
+        }
+        console.log(data);
+
+        $.ajax({
+            type: 'POST',
+            url: '/Evaluation/FirstManagerEvaluation',
+            data: "{data:" + JSON.stringify(data) + "}",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data) {
+                //alert("burası success");
+
+            },
+            error: function (x, e) {
+                alert("Değerlendirmeleriniz Başarıyla Kaydedildi");
+                window.location.replace("/Evaluation/Index");
+            }
+        });
+
+
+    }
+</script>

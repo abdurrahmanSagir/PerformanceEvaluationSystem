@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "AddEmployee";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+@using PerformanceEvaluationSystem.Models;
+
+@model PerformanceEvaluationSystem.App_Classes.ResponseViewModel.AddEmployeeViewModel
+
+<div class="col-md-12">
+    <div class="panel panel-filled">
+        <div class="panel-heading">
+            <div class="panel-tools">
+                <a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
+            </div>
+            Personel Ekle
+        </div>
+        <div class="panel-body">
+            <form action="/Employee/AddEmployee" method="post" id="loginForm">
+                <div class="form-group">
+                    <label>Adı</label>
+                    <input type="text" class="form-control" placeholder="Ad Giriniz" name="Name" required>
+                </div>
+                <div class="form-group">
+                    <label>Soyadı</label>
+                    <input type="text" class="form-control" placeholder="Soyadı Giriniz" name="Surname" required>
+                </div>
+                <div class="form-group">
+                    <label>Sicil Numarası</label>
+                    <input type="text" class="form-control" placeholder="Sicil Numarası Giriniz" name="RegistryNumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputName">Telefon Numarası</label>
+                    <input type="number" class="form-control" placeholder="Telefon Numarası Giriniz" name="PhoneNumber" required>
+                </div>
+                @*<div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" placeholder="Email Giriniz" name="Email">
+                    </div>*@
+                <div class="form-group">
+                    <label>Şirket Adı</label>
+                    <input type="text" class="form-control" placeholder="Şirket Adı Giriniz" name="CompanyName" required>
+                </div>
+                <div class="form-group" id="mainForm">
+                    <label for="exampleInputName">Rol Atama</label>
+                    <select class="form-control" name="ID" id="selectedItem">
+                        @foreach (Role rl in ViewBag.Role)
+                        {
+                            if (rl.ID != 15)
+                            {
+                                <option value="@rl.ID" id="deneme">@rl.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group" id="target1">
+                    <label for="exampleInputName">Hedef Giriş Yöneticisi</label>
+                    @Html.DropDownList("TargetAssignmentManagerID", null, new { @class = "form-control" })
+                </div>
+                <div class="form-group" id="target2">
+                    <label for="exampleInputName">1. Yönetici</label>
+                    @Html.DropDownList("FirstManagerID", null, new { @class = "form-control" })
+                </div>
+                <div class="form-group" id="target3">
+                    <label for="exampleInputName">2. Yönetici</label>
+                    @Html.DropDownList("SecondManagerID", null, new { @class = "form-control" })
+                </div>
+                <button type="submit" class="btn btn-default">Kaydet</button>
+
+
+
+                <script>
+
+                    $(function () {
+                        $('#target1').hide();
+                        $('#target2').hide();
+                        $('#target3').hide();
+                        $("#selectedItem").on('change', function () {
+                            if ($("#selectedItem").val() != 14) {
+                                console.log('İf');
+                                $('#target1').hide();
+                                $('#target2').hide();
+                                $('#target3').hide();
+                            }
+                            if ($("#selectedItem").val() == 14) {
+                                console.log('Else');
+                                $('#target1').show();
+                                $('#target2').show();
+                                $('#target3').show();
+                            }
+                        })
+
+                    });
+                </script>
+            </form>
+        </div>
+    </div>
+</div>

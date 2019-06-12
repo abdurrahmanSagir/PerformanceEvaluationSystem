@@ -1,0 +1,175 @@
+﻿
+@{
+    Layout = null;
+}
+@using PerformanceEvaluationSystem.Models;
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/Content/vendor/fontawesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="/Content/vendor/animate.css/animate.css" />
+    <link rel="stylesheet" href="/Content/vendor/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="/Content/vendor/toastr/toastr.min.css" />
+    <!-- App styles -->
+    <link rel="stylesheet" href="/Content/styles/pe-icons/pe-icon-7-stroke.css" />
+    <link rel="stylesheet" href="/Content/styles/pe-icons/helper.css" />
+    <link rel="stylesheet" href="/Content/styles/stroke-icons/style.css" />
+    <link rel="stylesheet" href="/Content/styles/style.css">
+
+    @RenderSection("head", false)
+
+</head>
+<body>
+    <!-- Wrapper-->
+    <div class="wrapper">
+        <!-- Header-->
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <div id="mobile-menu">
+                        <div class="left-nav-toggle">
+                            <a href="/Content/#">
+                                <i class="stroke-hamburgermenu"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <a class="navbar-brand" href="/Content/index.html">
+                        PDS
+                    </a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <div class="left-nav-toggle">
+                        <a href="/Content/">
+                            <i class="stroke-hamburgermenu"></i>
+                        </a>
+                    </div>
+                    
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class=" profil-link">
+                            <a href="~/User/UserLogin">
+                                <span style="text-transform: uppercase;" class="profile-address">@(((User)Session["CurrentUser"]).Name) @(((User)Session["CurrentUser"]).Surname)</span>
+                                <img src="~/Content/images/defaultProfilePicture.png" class="img-circle" alt="">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- End header-->
+        <!-- Navigation-->
+        <aside class="navigation">
+            <nav>
+                <ul class="nav luna-nav">
+                    <li>
+                        <a href="">Anasayfa</a>
+                    </li>
+                    <li>
+                        <a href="~/Profile/Index">
+                            Profilim<span class="sub-nav-icon"></span>
+                        </a>
+                    </li>
+                    <li>
+                        @if (Session["Role"].Equals("Admin"))
+                        {
+                            <a href="/Content/#uielements" data-toggle="collapse" aria-expanded="false">
+                                Personel Bilgileri<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                            </a>
+                            <ul id="uielements" class="nav nav-second collapse">
+                                <li><a href="/Employee/Index">Personeller</a></li>
+                                <li><a href="/Role/Index">Roller</a></li>
+                            </ul>
+                        }
+
+                    </li>
+                    <li>
+                        @if (Session["Role"].Equals("TargetAssignmentManager"))
+                        {
+                            <a href="/Target/Index">
+                                Hedef Girişi<span class="sub-nav-icon"> </span>
+                            </a>
+                        }
+
+                    </li>
+                    <li>
+                        <a href="/Content/#charts" data-toggle="collapse" aria-expanded="false">
+                            Değerlendirme<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                        </a>
+                        <ul id="charts" class="nav nav-second collapse">
+                            @if (Session["Role"].Equals("Employee"))
+                            {
+                                <li><a href="/Evaluation/PersonalEvaluation">Kişisel Değerlendirme</a></li>
+                            }
+                            @if (Session["Role"].Equals("FirstManager"))
+                            {
+                                <li><a href="/Evaluation/Index?isFirstManagerEvaluation=1">İlk Yönetici Değerlendirmesi</a></li>
+                            }
+
+                            
+                            @*<li><a href="/Evaluation/Index?isFirstManagerEvaluation=0">İkinci Yönetici Değerlendirmesi</a></li>*@
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="~/Report/Index">
+                            Raporlar <span class="sub-nav-icon"></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        <!-- End navigation-->
+        <!-- Main content-->
+        <section class="content">
+            @RenderBody()
+        </section>
+        <!-- End main content-->
+    </div>
+    <!-- End wrapper-->
+    <!-- Vendor scripts -->
+    <script src="/Content/vendor/pacejs/pace.min.js"></script>
+    <script src="/Content/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/Content/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/Content/vendor/toastr/toastr.min.js"></script>
+    <script src="/Content/vendor/sparkline/index.js"></script>
+    <script src="/Content/vendor/flot/jquery.flot.min.js"></script>
+    <script src="/Content/vendor/flot/jquery.flot.resize.min.js"></script>
+    <script src="/Content/vendor/flot/jquery.flot.spline.js"></script>
+    <script src="/Content/vendor/datatables/datatables.min.js"></script>
+    <!-- App scripts -->
+    <script src="/Content/scripts/luna.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#tableExample1').DataTable({
+                "dom": 't'
+            });
+
+            $('#tableExample2').DataTable({
+                "dom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
+                "lengthMenu": [[6, 25, 50, -1], [6, 25, 50, "All"]],
+                "iDisplayLength": 6,
+            });
+
+            $('#tableExample3').DataTable({
+                dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                buttons: [
+                    { extend: 'copy', className: 'btn-sm' },
+                    { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
+                    { extend: 'pdf', title: 'ExampleFile', className: 'btn-sm' },
+                    { extend: 'print', className: 'btn-sm' }
+                ]
+            });
+
+        });
+    </script>
+
+</body>
+</html>
