@@ -135,6 +135,7 @@
     <Compile Include="Controllers\EvaluationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\TargetController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -1370,6 +1371,7 @@
     <Content Include="Views\Target\Index.cshtml" />
     <Content Include="Views\Target\AddTarget.cshtml" />
     <Content Include="Views\User\UserLogin.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
